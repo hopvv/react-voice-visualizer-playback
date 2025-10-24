@@ -1,12 +1,12 @@
 {
-  "name": "react-voice-visualizer",
+  "name": "react-voice-visualizer-playback",
   "private": false,
-  "version": "2.0.8",
+  "version": "0.0.1",
   "type": "module",
-  "author": "Yurii Zarytskyi",
+  "author": "hopvv",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YZarytskyi/react-voice-visualizer.git"
+    "url": "git+https://github.com/hopvv/react-voice-visualizer-playback.git"
   },
   "description": "React library for audio recording and visualization using Web Audio API",
   "license": "MIT",
@@ -32,19 +32,23 @@
     "getUserMedia",
     "react",
     "reactjs",
-    "library"
+    "library",
+    "playback",
+    "recording",
+    "continue recording",
+    "continue playback"
   ],
   "files": [
     "dist"
   ],
-  "main": "./dist/react-voice-visualizer.umd.cjs",
-  "module": "./dist/react-voice-visualizer.js",
+  "main": "./dist/react-voice-visualizer-playback.umd.cjs",
+  "module": "./dist/react-voice-visualizer-playback.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/react-voice-visualizer.js",
-      "require": "./dist/react-voice-visualizer.umd.cjs"
+      "import": "./dist/react-voice-visualizer-playback.js",
+      "require": "./dist/react-voice-visualizer-playback.umd.cjs"
     }
   },
   "scripts": {
@@ -74,7 +78,7 @@
     "vite-plugin-dts": "^3.5.3"
   },
   "bugs": {
-    "url": "https://github.com/YZarytskyi/react-voice-visualizer/issues"
+    "url": "https://github.com/hopvv/react-voice-visualizer-playback/issues"
   },
-  "homepage": "https://github.com/YZarytskyi/react-voice-visualizer#readme"
+  "homepage": "https://github.com/hopvv/react-voice-visualizer-playback#readme"
 }

@@ -1,4 +1,4 @@
-import { PaintLineParams } from "../types/types.ts";
+import { PaintLineParams } from "../types/types";
 
 export const paintLine = ({
   context,

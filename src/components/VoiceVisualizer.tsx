@@ -1,10 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  MouseEventHandler,
-} from "react";
+import { useState, useEffect, useLayoutEffect, useRef, MouseEventHandler } from 'react';
 
 import {
   drawByLiveStream,
@@ -13,24 +7,20 @@ import {
   initialCanvasSetup,
   formatToInlineStyleValue,
   formatRecordedAudioTime,
-} from "../helpers";
-import { useWebWorker } from "../hooks/useWebWorker.tsx";
-import { useDebounce } from "../hooks/useDebounce.tsx";
-import {
-  BarsData,
-  Controls,
-  BarItem,
-  GetBarsDataParams,
-} from "../types/types.ts";
+} from '../helpers';
+import { useWebWorker } from '../hooks/useWebWorker';
+import { useDebounce } from '../hooks/useDebounce';
+import { BarsData, Controls, BarItem, GetBarsDataParams } from '../types/types';
 
-import "../index.css";
+import '../index.css';
 
-import MicrophoneIcon from "../assets/MicrophoneIcon.tsx";
-import AudioWaveIcon from "../assets/AudioWaveIcon.tsx";
-import microphoneIcon from "../assets/microphone.svg";
-import playIcon from "../assets/play.svg";
-import pauseIcon from "../assets/pause.svg";
-import stopIcon from "../assets/stop.svg";
+import MicrophoneIcon from '../assets/MicrophoneIcon';
+import AudioWaveIcon from '../assets/AudioWaveIcon';
+import React from 'react';
+const microphoneIcon = require('../assets/microphone.svg');
+const playIcon = require('../assets/play.svg');
+const pauseIcon = require('../assets/pause.svg');
+const stopIcon = require('../assets/stop.svg');
 
 interface VoiceVisualizerProps {
   controls: Controls;
@@ -95,12 +85,12 @@ const VoiceVisualizer = ({
     _setIsProcessingOnResize,
     _setIsProcessingAudioOnComplete,
   },
-  width = "100%",
+  width = '100%',
   height = 200,
   speed = 3,
-  backgroundColor = "transparent",
-  mainBarColor = "#FFFFFF",
-  secondaryBarColor = "#5e5e5e",
+  backgroundColor = 'transparent',
+  mainBarColor = '#FFFFFF',
+  secondaryBarColor = '#5e5e5e',
   barWidth = 2,
   gap = 1,
   rounded = 5,
@@ -137,9 +127,7 @@ const VoiceVisualizer = ({
   const isMobile = screenWidth < 768;
   const formattedSpeed = Math.trunc(speed);
   const formattedGap = Math.trunc(gap);
-  const formattedBarWidth = Math.trunc(
-    isMobile && formattedGap > 0 ? barWidth + 1 : barWidth,
-  );
+  const formattedBarWidth = Math.trunc(isMobile && formattedGap > 0 ? barWidth + 1 : barWidth);
   const unit = formattedBarWidth + formattedGap * formattedBarWidth;
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -182,7 +170,7 @@ const VoiceVisualizer = ({
     return () => {
       resizeObserver.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [width, isAvailableRecordedAudio]);
 
   useLayoutEffect(() => {
@@ -210,7 +198,7 @@ const VoiceVisualizer = ({
     }
 
     indexSpeedRef.current += 1;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     canvasRef.current,
     audioData,
@@ -228,28 +216,23 @@ const VoiceVisualizer = ({
     if (!isAvailableRecordedAudio) return;
 
     if (isRecordedCanvasHovered) {
-      canvasRef.current?.addEventListener("mouseleave", hideTimeIndicator);
+      canvasRef.current?.addEventListener('mouseleave', hideTimeIndicator);
     } else {
-      canvasRef.current?.addEventListener("mouseenter", showTimeIndicator);
+      canvasRef.current?.addEventListener('mouseenter', showTimeIndicator);
     }
 
     return () => {
       if (isRecordedCanvasHovered) {
-        canvasRef.current?.removeEventListener("mouseleave", hideTimeIndicator);
+        canvasRef.current?.removeEventListener('mouseleave', hideTimeIndicator);
       } else {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        canvasRef.current?.removeEventListener("mouseenter", showTimeIndicator);
+        // eslint-disable-next-line
+        canvasRef.current?.removeEventListener('mouseenter', showTimeIndicator);
       }
     };
   }, [isRecordedCanvasHovered, isAvailableRecordedAudio]);
 
   useEffect(() => {
-    if (
-      !bufferFromRecordedBlob ||
-      !canvasRef.current ||
-      isRecordingInProgress ||
-      isResizing
-    ) {
+    if (!bufferFromRecordedBlob || !canvasRef.current || (isRecordingInProgress && !isPausedRecording) || isResizing) {
       return;
     }
 
@@ -269,33 +252,17 @@ const VoiceVisualizer = ({
       gap: formattedGap,
     });
 
-    canvasRef.current?.addEventListener("mousemove", setCurrentHoveredOffsetX);
+    canvasRef.current?.addEventListener('mousemove', setCurrentHoveredOffsetX);
 
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      canvasRef.current?.removeEventListener(
-        "mousemove",
-        setCurrentHoveredOffsetX,
-      );
+      // eslint-disable-next-line
+      canvasRef.current?.removeEventListener('mousemove', setCurrentHoveredOffsetX);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    bufferFromRecordedBlob,
-    canvasCurrentWidth,
-    canvasCurrentHeight,
-    gap,
-    barWidth,
-    isResizing,
-  ]);
+    // eslint-disable-next-line
+  }, [bufferFromRecordedBlob, canvasCurrentWidth, canvasCurrentHeight, gap, barWidth, isResizing]);
 
   useEffect(() => {
-    if (
-      onlyRecording ||
-      !barsData?.length ||
-      !canvasRef.current ||
-      isProcessingRecordedAudio
-    )
-      return;
+    if (onlyRecording || !barsData?.length || !canvasRef.current || isProcessingRecordedAudio) return;
 
     if (isCleared) {
       setBarsData([]);
@@ -314,16 +281,8 @@ const VoiceVisualizer = ({
       rounded,
       duration,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    barsData,
-    currentAudioTime,
-    isCleared,
-    rounded,
-    backgroundColor,
-    mainBarColor,
-    secondaryBarColor,
-  ]);
+    // eslint-disable-next-line
+  }, [barsData, currentAudioTime, isCleared, rounded, backgroundColor, mainBarColor, secondaryBarColor]);
 
   useEffect(() => {
     if (isProcessingRecordedAudio && canvasRef.current) {
@@ -332,7 +291,7 @@ const VoiceVisualizer = ({
         backgroundColor,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [isProcessingRecordedAudio]);
 
   function onResize() {
@@ -340,18 +299,11 @@ const VoiceVisualizer = ({
 
     indexSpeedRef.current = formattedSpeed;
 
-    const roundedHeight =
-      Math.trunc(
-        (canvasContainerRef.current.clientHeight * window.devicePixelRatio) / 2,
-      ) * 2;
+    const roundedHeight = Math.trunc((canvasContainerRef.current.clientHeight * window.devicePixelRatio) / 2) * 2;
 
     setCanvasCurrentWidth(canvasContainerRef.current.clientWidth);
     setCanvasCurrentHeight(roundedHeight);
-    setCanvasWidth(
-      Math.round(
-        canvasContainerRef.current.clientWidth * window.devicePixelRatio,
-      ),
-    );
+    setCanvasWidth(Math.round(canvasContainerRef.current.clientWidth * window.devicePixelRatio));
 
     setIsResizing(false);
   }
@@ -376,31 +328,23 @@ const VoiceVisualizer = ({
     setHoveredOffsetX(e.offsetX);
   };
 
-  const handleRecordedAudioCurrentTime: MouseEventHandler<HTMLCanvasElement> = (
-    e,
-  ) => {
+  const handleRecordedAudioCurrentTime: MouseEventHandler<HTMLCanvasElement> = e => {
     if (audioRef?.current && canvasRef.current) {
-      const newCurrentTime =
-        (duration / canvasCurrentWidth) *
-        (e.clientX - canvasRef.current.getBoundingClientRect().left);
+      const newCurrentTime = (duration / canvasCurrentWidth) * (e.clientX - canvasRef.current.getBoundingClientRect().left);
 
       audioRef.current.currentTime = newCurrentTime;
       setCurrentAudioTime(newCurrentTime);
     }
   };
 
-  const timeIndicatorStyleLeft =
-    (currentAudioTime / duration) * canvasCurrentWidth;
+  const timeIndicatorStyleLeft = (currentAudioTime / duration) * canvasCurrentWidth;
 
   return (
-    <div className={`voice-visualizer ${mainContainerClassName ?? ""}`}>
+    <div className={`voice-visualizer ${mainContainerClassName ?? ''}`}>
       <div
-        className={`voice-visualizer__canvas-container ${
-          canvasContainerClassName ?? ""
-        }`}
+        className={`voice-visualizer__canvas-container ${canvasContainerClassName ?? ''}`}
         ref={canvasContainerRef}
-        style={{ width: formatToInlineStyleValue(width) }}
-      >
+        style={{ width: formatToInlineStyleValue(width) }}>
         <canvas
           ref={canvasRef}
           width={canvasWidth}
@@ -409,34 +353,20 @@ const VoiceVisualizer = ({
           style={{
             height: formatToInlineStyleValue(height),
             width: canvasCurrentWidth,
-          }}
-        >
+          }}>
           Your browser does not support HTML5 Canvas.
         </canvas>
         {isDefaultUIShown && isCleared && (
           <>
             <AudioWaveIcon color={defaultAudioWaveIconColor} />
             <AudioWaveIcon color={defaultAudioWaveIconColor} reflect />
-            <button
-              type="button"
-              onClick={startRecording}
-              className="voice-visualizer__canvas-microphone-btn"
-            >
-              <MicrophoneIcon
-                color={defaultMicrophoneIconColor}
-                stroke={0.5}
-                className="voice-visualizer__canvas-microphone-icon"
-              />
+            <button type="button" onClick={startRecording} className="voice-visualizer__canvas-microphone-btn">
+              <MicrophoneIcon color={defaultMicrophoneIconColor} stroke={0.5} className="voice-visualizer__canvas-microphone-icon" />
             </button>
           </>
         )}
         {isAudioProcessingTextShown && isProcessingRecordedAudio && (
-          <p
-            className={`voice-visualizer__canvas-audio-processing ${
-              audioProcessingTextClassName ?? ""
-            }`}
-            style={{ color: mainBarColor }}
-          >
+          <p className={`voice-visualizer__canvas-audio-processing ${audioProcessingTextClassName ?? ''}`} style={{ color: mainBarColor }}>
             Processing Audio...
           </p>
         )}
@@ -446,55 +376,33 @@ const VoiceVisualizer = ({
           !isMobile &&
           isProgressIndicatorOnHoverShown && (
             <div
-              className={`voice-visualizer__progress-indicator-hovered ${
-                progressIndicatorOnHoverClassName ?? ""
-              }`}
+              className={`voice-visualizer__progress-indicator-hovered ${progressIndicatorOnHoverClassName ?? ''}`}
               style={{
                 left: hoveredOffsetX,
-              }}
-            >
+              }}>
               {isProgressIndicatorTimeOnHoverShown && (
                 <p
-                  className={`voice-visualizer__progress-indicator-hovered-time 
-                    ${
-                      canvasCurrentWidth - hoveredOffsetX < 70
-                        ? "voice-visualizer__progress-indicator-hovered-time-left"
-                        : ""
-                    } 
-                    ${progressIndicatorTimeOnHoverClassName ?? ""}`}
-                >
-                  {formatRecordedAudioTime(
-                    (duration / canvasCurrentWidth) * hoveredOffsetX,
-                  )}
+                  className={`voice-visualizer__progress-indicator-hovered-time
+                    ${canvasCurrentWidth - hoveredOffsetX < 70 ? 'voice-visualizer__progress-indicator-hovered-time-left' : ''}
+                    ${progressIndicatorTimeOnHoverClassName ?? ''}`}>
+                  {formatRecordedAudioTime((duration / canvasCurrentWidth) * hoveredOffsetX)}
                 </p>
               )}
             </div>
           )}
-        {isProgressIndicatorShown &&
-        isAvailableRecordedAudio &&
-        !isProcessingRecordedAudio &&
-        duration ? (
+        {isProgressIndicatorShown && isAvailableRecordedAudio && !isProcessingRecordedAudio && duration ? (
           <div
-            className={`voice-visualizer__progress-indicator ${
-              progressIndicatorClassName ?? ""
-            }`}
+            className={`voice-visualizer__progress-indicator ${progressIndicatorClassName ?? ''}`}
             style={{
-              left:
-                timeIndicatorStyleLeft < canvasCurrentWidth - 1
-                  ? timeIndicatorStyleLeft
-                  : canvasCurrentWidth - 1,
-            }}
-          >
+              left: timeIndicatorStyleLeft < canvasCurrentWidth - 1 ? timeIndicatorStyleLeft : canvasCurrentWidth - 1,
+            }}>
             {isProgressIndicatorTimeShown && (
               <p
                 className={`voice-visualizer__progress-indicator-time ${
-                  canvasCurrentWidth -
-                    (currentAudioTime * canvasCurrentWidth) / duration <
-                  70
-                    ? "voice-visualizer__progress-indicator-time-left"
-                    : ""
-                } ${progressIndicatorTimeClassName ?? ""}`}
-              >
+                  canvasCurrentWidth - (currentAudioTime * canvasCurrentWidth) / duration < 70
+                    ? 'voice-visualizer__progress-indicator-time-left'
+                    : ''
+                } ${progressIndicatorTimeClassName ?? ''}`}>
                 {formattedRecordedAudioCurrentTime}
               </p>
             )}
@@ -505,14 +413,8 @@ const VoiceVisualizer = ({
       {isControlPanelShown && (
         <>
           <div className="voice-visualizer__audio-info-container">
-            {isRecordingInProgress && (
-              <p className="voice-visualizer__audio-info-time">
-                {formattedRecordingTime}
-              </p>
-            )}
-            {duration && !isProcessingRecordedAudio ? (
-              <p>{formattedDuration}</p>
-            ) : null}
+            {isRecordingInProgress && <p className="voice-visualizer__audio-info-time">{formattedRecordingTime}</p>}
+            {duration && !isProcessingRecordedAudio ? <p>{formattedDuration}</p> : null}
           </div>
 
           <div className="voice-visualizer__buttons-container">
@@ -520,17 +422,9 @@ const VoiceVisualizer = ({
               <div className="voice-visualizer__btn-container">
                 <button
                   type="button"
-                  className={`voice-visualizer__btn-left ${
-                    isPausedRecording
-                      ? "voice-visualizer__btn-left-microphone"
-                      : ""
-                  }`}
-                  onClick={togglePauseResume}
-                >
-                  <img
-                    src={isPausedRecording ? microphoneIcon : pauseIcon}
-                    alt={isPausedRecording ? "Play" : "Pause"}
-                  />
+                  className={`voice-visualizer__btn-left ${isPausedRecording ? 'voice-visualizer__btn-left-microphone' : ''}`}
+                  onClick={togglePauseResume}>
+                  <img src={isPausedRecording ? microphoneIcon : pauseIcon} alt={isPausedRecording ? 'Play' : 'Pause'} />
                 </button>
               </div>
             )}
@@ -538,30 +432,21 @@ const VoiceVisualizer = ({
               <button
                 type="button"
                 className={`voice-visualizer__btn-left ${
-                  isRecordingInProgress || isProcessingStartRecording
-                    ? "voice-visualizer__visually-hidden"
-                    : ""
+                  isRecordingInProgress || isProcessingStartRecording ? 'voice-visualizer__visually-hidden' : ''
                 }`}
                 onClick={togglePauseResume}
-                disabled={isProcessingRecordedAudio}
-              >
-                <img
-                  src={isPausedRecordedAudio ? playIcon : pauseIcon}
-                  alt={isPausedRecordedAudio ? "Play" : "Pause"}
-                />
+                disabled={isProcessingRecordedAudio}>
+                <img src={isPausedRecordedAudio ? playIcon : pauseIcon} alt={isPausedRecordedAudio ? 'Play' : 'Pause'} />
               </button>
             )}
             {isCleared && (
               <button
                 type="button"
                 className={`voice-visualizer__btn-center voice-visualizer__relative ${
-                  isProcessingStartRecording
-                    ? "voice-visualizer__btn-center--border-transparent"
-                    : ""
+                  isProcessingStartRecording ? 'voice-visualizer__btn-center--border-transparent' : ''
                 }`}
                 onClick={startRecording}
-                disabled={isProcessingStartRecording}
-              >
+                disabled={isProcessingStartRecording}>
                 {isProcessingStartRecording && (
                   <div className="voice-visualizer__spinner-wrapper">
                     <div className="voice-visualizer__spinner" />
@@ -573,23 +458,17 @@ const VoiceVisualizer = ({
             <button
               type="button"
               className={`voice-visualizer__btn-center voice-visualizer__btn-center-pause ${
-                !isRecordingInProgress
-                  ? "voice-visualizer__visually-hidden"
-                  : ""
+                !isRecordingInProgress ? 'voice-visualizer__visually-hidden' : ''
               }`}
-              onClick={stopRecording}
-            >
+              onClick={stopRecording}>
               <img src={stopIcon} alt="Stop" />
             </button>
             {!isCleared && (
               <button
                 type="button"
                 onClick={clearCanvas}
-                className={`voice-visualizer__btn ${
-                  controlButtonsClassName ?? ""
-                }`}
-                disabled={isProcessingRecordedAudio}
-              >
+                className={`voice-visualizer__btn ${controlButtonsClassName ?? ''}`}
+                disabled={isProcessingRecordedAudio}>
                 Clear
               </button>
             )}
@@ -597,11 +476,8 @@ const VoiceVisualizer = ({
               <button
                 type="button"
                 onClick={saveAudioFile}
-                className={`voice-visualizer__btn ${
-                  controlButtonsClassName ?? ""
-                }`}
-                disabled={isProcessingRecordedAudio}
-              >
+                className={`voice-visualizer__btn ${controlButtonsClassName ?? ''}`}
+                disabled={isProcessingRecordedAudio}>
                 Download Audio
               </button>
             )}
@@ -612,4 +488,4 @@ const VoiceVisualizer = ({
   );
 };
 
-export default VoiceVisualizer;
+export default React.memo(VoiceVisualizer);
