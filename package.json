@@ -1,7 +1,7 @@
 {
   "name": "react-voice-visualizer-playback",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "author": "hopvv",
   "repository": {
@@ -41,14 +41,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/react-voice-visualizer-playback.umd.cjs",
-  "module": "./dist/react-voice-visualizer-playback.js",
+  "main": "./dist/react-voice-visualizer.umd.cjs",
+  "module": "./dist/react-voice-visualizer.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/react-voice-visualizer-playback.js",
-      "require": "./dist/react-voice-visualizer-playback.umd.cjs"
+      "import": "./dist/react-voice-visualizer.js",
+      "require": "./dist/react-voice-visualizer.umd.cjs"
     }
   },
   "scripts": {
