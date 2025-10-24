@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { AnyFunction } from '../types/types';
+import { AnyFunction } from '../types/types.ts';
 
 export const useDebounce = (func: AnyFunction, wait = 250) => {
   const timeout = useRef<ReturnType<typeof setTimeout>>();

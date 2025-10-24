@@ -1,7 +1,7 @@
-import { initialCanvasSetup } from './initialCanvasSetup';
-import { paintLine } from './paintLine';
+import { initialCanvasSetup } from './initialCanvasSetup.ts';
+import { paintLine } from './paintLine.ts';
 
-import { DrawByBlob } from '../types/types';
+import { DrawByBlob } from '../types/types.ts';
 
 export const drawByBlob = ({
   barsData,
