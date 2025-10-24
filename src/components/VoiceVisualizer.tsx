@@ -8,8 +8,8 @@ import {
   formatToInlineStyleValue,
   formatRecordedAudioTime,
 } from '../helpers';
-import { useWebWorker } from '../hooks/useWebWorker.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
+import { useWebWorker } from '../hooks/useWebWorker.tsx';
+import { useDebounce } from '../hooks/useDebounce.tsx';
 import { BarsData, Controls, BarItem, GetBarsDataParams } from '../types/types.ts';
 
 import '../index.css';
