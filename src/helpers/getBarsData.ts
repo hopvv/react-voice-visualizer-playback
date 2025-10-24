@@ -1,12 +1,6 @@
-import { BarsData, GetBarsDataParams } from "../types/types.ts";
+import { BarsData, GetBarsDataParams } from '../types/types';
 
-export const getBarsData = ({
-  bufferData,
-  height,
-  width,
-  barWidth,
-  gap,
-}: GetBarsDataParams): BarsData[] => {
+export const getBarsData = ({ bufferData, height, width, barWidth, gap }: GetBarsDataParams): BarsData[] => {
   const units = width / (barWidth + gap * barWidth);
   const step = Math.floor(bufferData.length / units);
   const halfHeight = height / 2;
@@ -36,7 +30,7 @@ export const getBarsData = ({
 
   if (halfHeight * 0.95 > maxDataPoint * halfHeight) {
     const adjustmentFactor = (halfHeight * 0.95) / maxDataPoint;
-    barsData = barsData.map((bar) => ({
+    barsData = barsData.map(bar => ({
       max: bar.max > 0.01 ? bar.max * adjustmentFactor : 1,
     }));
   }
