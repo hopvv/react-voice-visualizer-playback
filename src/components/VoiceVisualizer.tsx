@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef, MouseEventHandler } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, MouseEventHandler } from 'react';
 
 import {
   drawByLiveStream,
@@ -8,19 +8,18 @@ import {
   formatToInlineStyleValue,
   formatRecordedAudioTime,
 } from '../helpers';
-import { useWebWorker } from '../hooks/useWebWorker';
-import { useDebounce } from '../hooks/useDebounce';
-import { BarsData, Controls, BarItem, GetBarsDataParams } from '../types/types';
+import { useWebWorker } from '../hooks/useWebWorker.tsx';
+import { useDebounce } from '../hooks/useDebounce.tsx';
+import { BarsData, Controls, BarItem, GetBarsDataParams } from '../types/types.ts';
 
 import '../index.css';
 
-import MicrophoneIcon from '../assets/MicrophoneIcon';
-import AudioWaveIcon from '../assets/AudioWaveIcon';
-import React from 'react';
-const microphoneIcon = require('../assets/microphone.svg');
-const playIcon = require('../assets/play.svg');
-const pauseIcon = require('../assets/pause.svg');
-const stopIcon = require('../assets/stop.svg');
+import MicrophoneIcon from '../assets/MicrophoneIcon.tsx';
+import AudioWaveIcon from '../assets/AudioWaveIcon.tsx';
+import microphoneIcon from '../assets/microphone.svg';
+import playIcon from '../assets/play.svg';
+import pauseIcon from '../assets/pause.svg';
+import stopIcon from '../assets/stop.svg';
 
 interface VoiceVisualizerProps {
   controls: Controls;

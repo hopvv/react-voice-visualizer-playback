@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { AnyFunction, UseWebWorkerParams } from '../types/types';
+import { AnyFunction, UseWebWorkerParams } from '../types/types.ts';
 
 const workerHandler = (fn: AnyFunction) => {
   onmessage = event => {

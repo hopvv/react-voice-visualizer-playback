@@ -1,4 +1,4 @@
-import { BarsData, GetBarsDataParams } from '../types/types';
+import { BarsData, GetBarsDataParams } from '../types/types.ts';
 
 export const getBarsData = ({ bufferData, height, width, barWidth, gap }: GetBarsDataParams): BarsData[] => {
   const units = width / (barWidth + gap * barWidth);

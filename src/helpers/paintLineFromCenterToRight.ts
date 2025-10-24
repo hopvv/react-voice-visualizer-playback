@@ -1,5 +1,5 @@
-import { paintLine } from "./paintLine";
-import { PaintLineFromCenterToRightParams } from "../types/types";
+import { paintLine } from "./paintLine.ts";
+import { PaintLineFromCenterToRightParams } from "../types/types.ts";
 
 export function paintLineFromCenterToRight({
   context,

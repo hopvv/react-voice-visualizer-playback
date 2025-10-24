@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { formatDurationTime, formatRecordedAudioTime, formatRecordingTime, getFileExtensionFromMimeType } from '../helpers';
-import { Controls, useVoiceVisualizerParams } from '../types/types';
+import { Controls, useVoiceVisualizerParams } from '../types/types.ts';
 
 function useVoiceVisualizer({
   onStartRecording,

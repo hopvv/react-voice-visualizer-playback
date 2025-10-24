@@ -1,4 +1,4 @@
-import { GetDataForCanvasParams } from '../types/types';
+import { GetDataForCanvasParams } from '../types/types.ts';
 
 export const initialCanvasSetup = ({ canvas, backgroundColor }: GetDataForCanvasParams) => {
   const height = canvas.height;

@@ -1,11 +1,11 @@
-import { initialCanvasSetup } from './initialCanvasSetup';
-import { paintLine } from './paintLine';
-import { paintLineFromCenterToRight } from './paintLineFromCenterToRight';
+import { initialCanvasSetup } from './initialCanvasSetup.ts';
+import { paintLine } from './paintLine.ts';
+import { paintLineFromCenterToRight } from './paintLineFromCenterToRight.ts';
 
-import { DrawByLiveStreamParams, BarItem } from '../types/types';
+import { DrawByLiveStreamParams, BarItem } from '../types/types.ts';
 
 // Store previous picks when paused
-let previousPicks: (BarItem | null)[] = [];
+let previousPicks: (BarItem | null)[] = []; 
 let isFirstDrawAfterPause = false;
 // Store all wave data
 let allPicks: (BarItem | null)[] = [];
